@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Вопросы</h1>
+<table class="table table-bordered table-striped">
+    <thead>
+    {% for headline in questions_headlines %}
+        <th>{{ headline }}</th>
+    {% endfor %}
+    </thead>
+    <tbody>
+     {% for question in questions %}
+    <tr>
+        <td>{{ question.datetime }}</td>
+        <td>{{ question.enterprise }}</td>
+        <td>{{ question.question }}</td>
+        <td>{{ question.email }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+
+<h1>Статистика поданных вопросов</h1>
+<table class="table table-bordered table-striped">
+    <thead>
+       {% for headline in stat_questions_headlines %}
+        <th>{{ headline }}</th>
+    {% endfor %}
+    </thead>
+    <tbody>
+     {% for enterprise in stat_questions %}
+    <tr>
+    <td>{{ enterprise.division }}</td>
+    <td>{{ enterprise.enterprise }}</td>
+    <td>{{ enterprise.total }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}
