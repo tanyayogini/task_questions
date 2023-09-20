@@ -1,0 +1,9 @@
+[{"model": "enterprise.division",
+    "fields": {"name": "Топливный"}},
+  {"model": "enterprise.division",
+    "fields": {"name": "Машиностроение"}},
+  {"model": "enterprise.division",
+    "fields": {"name": "Ядерный оружейный комплекс"}},
+  {"model": "enterprise.division",
+    "fields": {"name": "Энергетический"}}
+]

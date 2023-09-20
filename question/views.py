@@ -11,13 +11,8 @@ def main(request):
     return render(request, "main.html")
 
 
-class CreateQuestionView(View):
-
-    def get(self, request):
-        form = QuestionForm()
-        return render(request, "question.html", {'form': form})
-
-    def post(self, request, *args, **kwargs):
+def create_question(request):
+    if request.method == "POST":
         form = QuestionForm(request.POST)
         if form.is_valid():
             if form.cleaned_data["new"]:
@@ -36,35 +31,39 @@ class CreateQuestionView(View):
             return render(request, "success.html")
         return render(request, 'question.html', {'form': form})
 
+    else:
+        form = QuestionForm()
+        return render(request, "question.html", {'form': form})
+
 
 def get_statistics(request):
-    question = Question.objects.all()
-    questions = []
-    for q in question:
-        questions.append({
-            'datetime': q.create_at,
-            'enterprise': q.enterprise,
-            'question': q.question,
-            'email': q.email if q.email else ''
-        })
+    questions = Question.objects.all()
+    # questions = []
+    # for q in question:
+    #     questions.append({
+    #         'datetime': q.create_at,
+    #         'enterprise': q.enterprise,
+    #         'question': q.question,
+    #         'email': q.email if q.email else ''
+    #     })
     questions_headlines = ['Дата время', 'Предприятие', 'Вопрос', 'Email']
 
-    question_enterprise = Enterprise.objects.all().annotate(total=Count('question')).order_by('-total')
+    question_enterprises = Enterprise.objects.all().annotate(total=Count('question')).order_by('-total')
 
-    stat_questions = []
-    for e in question_enterprise:
-        stat_questions.append({
-            'division': e.division,
-            'enterprise': e.name,
-            'total': e.total
-        })
+    # stat_questions = []
+    # for e in question_enterprise:
+    #     stat_questions.append({
+    #         'division': e.division,
+    #         'enterprise': e.name,
+    #         'total': e.total
+    #     })
 
     stat_questions_headlines = ['Дивизион', 'Предприятие', 'Количество поданных вопросов']
 
     context = {
         'questions': questions,
         'questions_headlines': questions_headlines,
-        'stat_questions': stat_questions,
+        'stat_questions': question_enterprises,
         'stat_questions_headlines': stat_questions_headlines
     }
 

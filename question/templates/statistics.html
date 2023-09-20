@@ -8,12 +8,12 @@
     {% endfor %}
     </thead>
     <tbody>
-     {% for question in questions %}
+     {% for q in questions %}
     <tr>
-        <td>{{ question.datetime }}</td>
-        <td>{{ question.enterprise }}</td>
-        <td>{{ question.question }}</td>
-        <td>{{ question.email }}</td>
+        <td>{{ q.create_at }}</td>
+        <td>{{ q.enterprise }}</td>
+        <td>{{ q.question }}</td>
+        <td>{{ q.email }}</td>
         </tr>
     {% endfor %}
     </tbody>
@@ -31,7 +31,7 @@
      {% for enterprise in stat_questions %}
     <tr>
     <td>{{ enterprise.division }}</td>
-    <td>{{ enterprise.enterprise }}</td>
+    <td>{{ enterprise.name }}</td>
     <td>{{ enterprise.total }}</td>
         </tr>
     {% endfor %}

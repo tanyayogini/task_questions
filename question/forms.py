@@ -1,17 +1,11 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from enterprise.models import Enterprise
+from enterprise.models import Enterprise, Division
 
 
 class QuestionForm(forms.Form):
-    DIVISION = [
-        ("Топливный", "Топливный"),
-        ("Машиностроение", "Машиностроение"),
-        ("Ядерный оружейный комплекс", "Ядерный оружейный комплекс"),
-        ("Энергетический", "Энергетический")
-    ]
-    division = forms.ChoiceField(choices=DIVISION, label='Выберите ваш дивизион *')
+    division = forms.ModelChoiceField(queryset=Division.objects.all(), label='Выберите ваш дивизион *')
     name = forms.ModelChoiceField(
         queryset=Enterprise.objects.all(),
         label='Выберите ваше предприятие *',
