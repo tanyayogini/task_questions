@@ -1,6 +1,5 @@
 from django.db.models import Count
 from django.shortcuts import render
-from django.views import View
 
 from enterprise.models import Enterprise
 from question.forms import QuestionForm
@@ -38,26 +37,9 @@ def create_question(request):
 
 def get_statistics(request):
     questions = Question.objects.all()
-    # questions = []
-    # for q in question:
-    #     questions.append({
-    #         'datetime': q.create_at,
-    #         'enterprise': q.enterprise,
-    #         'question': q.question,
-    #         'email': q.email if q.email else ''
-    #     })
     questions_headlines = ['Дата время', 'Предприятие', 'Вопрос', 'Email']
 
     question_enterprises = Enterprise.objects.all().annotate(total=Count('question')).order_by('-total')
-
-    # stat_questions = []
-    # for e in question_enterprise:
-    #     stat_questions.append({
-    #         'division': e.division,
-    #         'enterprise': e.name,
-    #         'total': e.total
-    #     })
-
     stat_questions_headlines = ['Дивизион', 'Предприятие', 'Количество поданных вопросов']
 
     context = {
